@@ -1,4 +1,4 @@
-import { OrderBook, SideBook } from "@/app/trading/page";
+import { OrderBook, SideBook } from "@/components/trading/Trading";
 
 /**
  * Formats price with 2 decimal places
