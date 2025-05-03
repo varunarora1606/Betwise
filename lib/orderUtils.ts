@@ -8,21 +8,6 @@ export const formatPrice = (price: number): string => {
 };
 
 /**
- * Calculates the spread between the highest buy and lowest sell orders
- */
-// export const calculateSpread = (
-//   buyOrders: Order[],
-//   sellOrders: Order[]
-// ): string | null => {
-//   if (sellOrders.length > 0 && buyOrders.length > 0) {
-//     const highestBuy = Math.max(...buyOrders.map(o => o.price));
-//     const lowestSell = Math.min(...sellOrders.map(o => o.price));
-//     return formatPrice(lowestSell - highestBuy);
-//   }
-//   return null;
-// };
-
-/**
  * Sorts the orderbook entries appropriately
  */
 export const sortOrders = (orderBook: OrderBook): OrderBook => {
