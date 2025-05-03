@@ -26,6 +26,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args:
+            - NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
           tags: varunarora1606/betwise:${{ github.sha }}
 
       # 2 thing missing
