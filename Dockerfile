@@ -3,11 +3,9 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-RUN npm install -g npm@11.3.0
-
 # Install dependencies
 COPY package.json package-lock.json ./
-RUN npm ci
+RUN npm i
 
 # Copy source code
 COPY . .
@@ -26,7 +24,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder /app/package.json ./package.json
 
 # Install only production dependencies
-RUN npm ci --omit=dev
+RUN npm i --omit=dev
 
 EXPOSE 3000
 
