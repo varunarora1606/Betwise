@@ -1,4 +1,4 @@
-import { TrendingUpIcon, Users } from "lucide-react";
+import { TrendingUpIcon } from "lucide-react";
 import { Badge } from "../ui/badge";
 import {
   Tooltip,

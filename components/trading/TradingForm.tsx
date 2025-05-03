@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Question } from "@/app/trading/page";
@@ -12,7 +12,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowUp, ArrowDown, Check, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 
 interface TradingFormProps {
   selectedQuestion: Question;
@@ -48,7 +48,7 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
 
     if (token) {
       try {
-        var response;
+        let response;
         if (transactionType == "buy") {
           response = await axios.post(
             "http://localhost:8000/api/v1/order/buy",

@@ -3,7 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MarketCard from "./MarketCard";
 import { OrderBook, Question } from "@/app/trading/page";
-import { formatPrice, getMaxQuantity, sortOrders } from "@/lib/orderUtils";
+import { getMaxQuantity, sortOrders } from "@/lib/orderUtils";
 import { toast } from "sonner";
 import { LoaderCircle, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
@@ -153,7 +153,7 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
     if (question) {
       loadOrderbook();
     }
-  }, [question]);
+  }, [question, getToken]);
 
   useEffect(() => {
     if (transactionType == "buy") {

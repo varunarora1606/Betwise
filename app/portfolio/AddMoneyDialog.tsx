@@ -53,6 +53,7 @@ const AddMoneyDialog = ({ onAddMoney }: AddMoneyDialogProps) => {
         setIsOpen(false);
         toast.success(`₹${amount.toLocaleString()} added to your wallet!`);
       } catch (error) {
+        console.log(error)
         toast.error("Payment failed", {
           description:
             "There was an error processing your payment. Please try again.",

@@ -20,7 +20,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { PortfolioItem, UserWallet, PendingOrder } from "@/types/portfolio";
+import { PortfolioItem, PendingOrder } from "@/types/portfolio";
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
@@ -71,14 +71,21 @@ const initialPendingOrders: PendingOrder[] = [
   },
 ];
 
+interface PortfolioApiItem {
+  symbol: string;
+  value: number;
+  quantity: number;
+}
+
 const Portfolio = () => {
   const { getToken } = useAuth();
 
   const [wallet, setWallet] = useState<number>(0);
   const [lockedWallet, setLockedWallet] = useState<number>(0);
 
-  const [pendingOrders, setPendingOrders] =
-    useState<PendingOrder[]>(initialPendingOrders);
+  // const [pendingOrders, setPendingOrders] =
+  //   useState<PendingOrder[]>(initialPendingOrders);
+  const pendingOrders = initialPendingOrders
   const [portfolioItems, setPortfolioItems] = useState<PortfolioItem[]>([]);
   const [totalPortfolioValue, setTotalPortfolioValue] = useState(0)
 
@@ -104,6 +111,7 @@ const Portfolio = () => {
   };
 
   const cancelOrder = (orderId: string) => {
+    console.log(orderId)
     toast.error("Feature comming soon");
   };
 
@@ -134,7 +142,7 @@ const Portfolio = () => {
         setWallet(data.inrBalance.quantity / 10);
         setLockedWallet(data.inrBalance.locked / 10);
         const newPortfolioItems: PortfolioItem[] = [];
-        data.portfolioItems.forEach((element: any) => {
+        data.portfolioItems.forEach((element: PortfolioApiItem) => {
           newPortfolioItems.push({
             id: element.symbol,
             name: element.symbol,
@@ -148,6 +156,7 @@ const Portfolio = () => {
           0
         ))
       } catch (error) {
+        console.log(error)
         toast.error("Error occured", {
           description: "Error occured: Please try again",
           icon: <X className="h-5 w-5 text-red-500" />,
@@ -155,8 +164,8 @@ const Portfolio = () => {
       }
     })();
 
-    return () => {};
-  }, []);
+    // return () => {};
+  }, [getToken]);
 
   return (
     <div className="min-h-screen bg-[#0A0A0F] text-white p-4 md:p-8">
