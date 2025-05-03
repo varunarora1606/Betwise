@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import MarketCard from "./MarketCard";
-import { OrderBook, Question } from "@/app/trading/page";
 import { getMaxQuantity, sortOrders } from "@/lib/orderUtils";
 import { toast } from "sonner";
 import { LoaderCircle, X } from "lucide-react";
 import { Skeleton } from "../ui/skeleton";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
+import { OrderBook, Question } from "./Trading";
 
 interface SelectedMarketProps {
   question: Question;

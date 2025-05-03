@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Question } from "@/app/trading/page";
 import axios, { AxiosError } from "axios";
 import { useAuth } from "@clerk/nextjs";
 import { toast } from "sonner";
@@ -13,6 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Check, X } from "lucide-react";
+import { Question } from "./Trading";
 
 interface TradingFormProps {
   selectedQuestion: Question;

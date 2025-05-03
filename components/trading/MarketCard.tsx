@@ -6,7 +6,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../ui/tooltip";
-import { Question } from "@/app/trading/page";
+import { Question } from "./Trading";
 
 interface MarketCardProps {
   question: Question;
