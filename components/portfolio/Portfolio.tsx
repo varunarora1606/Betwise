@@ -104,7 +104,7 @@ const Portfolio = () => {
 
       try {
         const response = await axios.get(
-          "http://localhost:8000/api/v1/order/me",
+          "http://api.betwise.varekle.tech/api/v1/order/me",
           {
             headers: {
               Authorization: `Bearer ${token}`,

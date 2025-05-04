@@ -52,7 +52,7 @@ const Trading = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/v1/order/markets", {
+      .get("http://api.betwise.varekle.tech/api/v1/order/markets", {
         withCredentials: true,
       })
       .then((res) => {

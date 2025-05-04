@@ -51,7 +51,7 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
         let response;
         if (transactionType == "buy") {
           response = await axios.post(
-            "http://localhost:8000/api/v1/order/buy",
+            "http://api.betwise.varekle.tech/api/v1/order/buy",
             {
               symbol: selectedQuestion.symbol,
               quantity: quantity,
@@ -68,7 +68,7 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
           );
         } else {
           response = await axios.post(
-            "http://localhost:8000/api/v1/order/sell",
+            "http://api.betwise.varekle.tech/api/v1/order/sell",
             {
               symbol: selectedQuestion.symbol,
               quantity: quantity,
