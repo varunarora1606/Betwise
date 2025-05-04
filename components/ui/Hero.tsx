@@ -23,7 +23,7 @@ const Hero = () => {
     <div className="md:grid grid-cols-2 md:p-24 relative p-5 overflow-hidden">
       <div className="left-part dark gap-2 flex flex-col  text-foreground mt-16 z-40">
         <div className="small-tagline bg-primary/15 max-w-max px-2 rounded-xl">
-          <span className="text-primary">Khelo Dimag se</span>
+          <span className="text-primary">Bet Wisely</span>
         </div>
         <div className="Main-text-here">
           <span className="lg:text-7xl md:text-5xl text-3xl font-semibold  font-[family-name:var(--font-geist-sans)]">
@@ -139,7 +139,7 @@ const FloatingDetailedCard = () => {
             className="bg-white text-primary hover:bg-white/90"
           >
             <DollarSign className="h-4 w-4 mr-1" />
-            Start Trading
+            <Link href={"/trading"}>Start Trading</Link>
           </Button>
         </div>
       </CardFooter>

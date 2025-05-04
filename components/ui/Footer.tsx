@@ -11,7 +11,7 @@ export default function Footer() {
               <div className="logo ">
                 <span className="flex justify-between align-middle items-center text-3xl text-primary">
                   <Dices className="size-9 " />
-                  <Link href={"/"}>Khelo</Link>
+                  <Link href={"/"}>Betwise</Link>
                 </span>
               </div>
             </Link>
@@ -116,7 +116,7 @@ export default function Footer() {
         </div>
         <div className="mt-12 pt-8 border-t border-gray-800">
           <p className="text-center text-gray-400">
-            © {new Date().getFullYear()} Khelo. All rights reserved.
+            © {new Date().getFullYear()} Betwise. All rights reserved.
           </p>
         </div>
       </div>

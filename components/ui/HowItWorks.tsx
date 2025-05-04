@@ -23,7 +23,7 @@ function HowItWorks() {
           <span className="text-primary">How It Works?</span>
         </div>
         <div className="text-primary text-3xl md:text-7xl font-semibold">
-          From Insight to Profit: How to Navigate Khelo&apos;s Prediction
+          From Insight to Profit: How to Navigate Betwise&apos;s Prediction
           Markets
         </div>
         <p className="text-foreground max-w-2xl mx-auto">

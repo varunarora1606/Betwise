@@ -27,23 +27,27 @@ const Navbar = () => {
       <div className="flex justify-between align-middle items-center gap-14">
         <div className="logo ">
           <span className="flex justify-between align-middle items-center text-3xl text-primary">
-            <Dices className="size-9 " />
-            <Link href={"/"}>Khelo</Link>
+            <Link href={"/"} className="flex">
+              <Dices className="size-9 " />
+              Betwise
+            </Link>
           </span>
         </div>
-        <div className="midsection  justify-between align-middle items-center gap-4 md:flex hidden">
+        {/* <div className="midsection  justify-between align-middle items-center gap-4 md:flex hidden">
           <div className="trading flex justify-center align-middle items-center gap-1  text-xl hover:text-primary hover:cursor-pointer hover:scale-105 ease-linear duration-200">
             Trading <ChartNoAxesCombined className="size-5" />
           </div>
           <div className="Read flex justify-center align-middle items-center gap-1  text-xl hover:text-primary hover:cursor-pointer hover:scale-105 ease-linear duration-200">
             Read <Book className="size-5" />
           </div>
-        </div>
+        </div> */}
       </div>
       <div className="endCTA gap-5  md:flex hidden">
-        <Button>Download App</Button>
         <Button>
           <Link href={"/trading"}>Trade Online</Link>
+        </Button>
+        <Button>
+          <Link href={"/portfolio"}>View Portfolio</Link>
         </Button>
         {!isLoaded ? (
           <div className="">
@@ -63,7 +67,7 @@ const Navbar = () => {
         )}
       </div>
 
-      <div className="md:hidden flex  justify-center align-middle items-center gap-2">
+      <div className="md:hidden flex justify-center align-middle items-center gap-2">
         <MobileBar />
         <SignedIn>
           <UserButton />

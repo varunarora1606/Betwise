@@ -20,31 +20,31 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Khelo - Predict and Play",
+  title: "Betwise - Bet Wisely",
   description:
-    "Khelo is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
+    "Betwise is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://kheloyaha.vercel.app/",
-    title: "Khelo - Predict and Play",
+    url: "https://betwise.varekle.tech/",
+    title: "Betwise - Bet Wisely",
     description:
-      "Khelo is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
+      "Betwise is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
     images: [
       {
-        url: "hhttps://kheloyaha.vercel.app/og-image.jpg",
+        url: "https://betwise.varekle.tech/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Khelo - Predict and Play",
+        alt: "Betwise - Bet Wisely",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Khelo - Predict and Play",
+    title: "Betwise - Bet Wisely",
     description:
-      "Khelo is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
-    images: ["https://kheloyaha.vercel.app/og-image.jpg"],
+      "Betwise is a leading prediction market app where users can make predictions, earn rewards, and join a vibrant community.",
+    images: ["https://betwise.varekle.tech/twitter-image.png"],
   },
 };
 
@@ -60,7 +60,9 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <head></head>
+        <head>
+          <meta name="apple-mobile-web-app-title" content="MyWebSite" />
+        </head>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background dark flex justify-center align-middle items-center flex-col`}
         >
