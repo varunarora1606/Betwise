@@ -1,6 +1,6 @@
 export interface PortfolioItem {
   id: string;
-  name: string;
+  title: string;
   value: number;
   quantity: number;
   change?: number; // Percentage change
@@ -13,7 +13,7 @@ export interface UserWallet {
 
 export interface PendingOrder {
   id: string;
-  name: string;
+  title: string;
   type: "buy" | "sell";
   quantity: number;
   price: number;

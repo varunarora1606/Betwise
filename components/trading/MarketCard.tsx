@@ -27,7 +27,7 @@ const MarketCard = ({ question, onClick, className }: MarketCardProps) => (
           className="text-sm bg-emerald-100 text-emerald-800  shadow-[0_0_10px_rgba(0,255,255,0.5)] rounded-full"
         >
           {/* <Users className="size-4" /> */}
-          volume: {question.volume}
+          volume: {question.volume / 10}
         </Badge>
         <TooltipProvider>
           <Tooltip>
@@ -61,11 +61,20 @@ const MarketCard = ({ question, onClick, className }: MarketCardProps) => (
     </div>
     <div>
       <div className="h-4 w-full flex overflow-hidden rounded-full mb-3">
-        <div className="h-full w-[50%] bg-green-400"></div>
-        <div className="h-full w-[50%] bg-red-400"></div>
+        <div
+          style={{ width: `${question.yesClosing}%`, maxWidth: "100%" }}
+          className="h-full bg-green-400"
+        ></div>
+        <div
+          style={{ width: `${100 - question.yesClosing}%`, maxWidth: "100%" }}
+          className="h-full w-[50%] bg-red-400"
+        ></div>
       </div>
       <div className="flex justify-between text-sm">
-        <span className="text-green-400">Yes: ₹{question.yesClosing/10}</span>
+        <span className="text-green-400">Yes: ₹{question.yesClosing / 10}</span>
+        <span className="text-red-400">
+          No: ₹{10 - question.yesClosing / 10}
+        </span>
       </div>
     </div>
   </div>

@@ -13,19 +13,25 @@ import {
 } from "@/components/ui/select";
 import { Check, X } from "lucide-react";
 import { Question } from "./Trading";
+import { API_URL_FULL } from "@/lib/config";
 
 interface TradingFormProps {
   selectedQuestion: Question;
   transactionType: "buy" | "sell";
   setTransactionType: React.Dispatch<React.SetStateAction<"buy" | "sell">>;
+  setReloadOrderbook: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: TradingFormProps) => {
+const TradingForm = ({
+  selectedQuestion,
+  transactionType,
+  setTransactionType,
+  setReloadOrderbook
+}: TradingFormProps) => {
   const { getToken } = useAuth();
   const [stockType, setStockType] = useState<"market" | "limit">("market");
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(selectedQuestion.yesClosing);
-  
 
   const handleTrade = async (stockSide: "yes" | "no") => {
     if (!quantity || quantity <= 0) {
@@ -51,7 +57,7 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
         let response;
         if (transactionType == "buy") {
           response = await axios.post(
-            "https://api.betwise.varekle.tech/api/v1/order/buy",
+            `${API_URL_FULL}/order/buy`,
             {
               symbol: selectedQuestion.symbol,
               quantity: quantity,
@@ -68,7 +74,7 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
           );
         } else {
           response = await axios.post(
-            "https://api.betwise.varekle.tech/api/v1/order/sell",
+            `${API_URL_FULL}/order/sell`,
             {
               symbol: selectedQuestion.symbol,
               quantity: quantity,
@@ -85,23 +91,29 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
           );
         }
         console.log(response);
-        console.log("Trade executed:", {
-          symbol: selectedQuestion.symbol,
-          quantity: quantity,
-          price: price,
-          stockSide: stockSide,
-          stockType: stockType,
-        });
+        setReloadOrderbook(prev => !prev)
 
-        toast.success(
-          `${stockSide.toUpperCase()} order placed successfully`,
-          {
-            description: `${
-              transactionType === "buy" ? "Bought" : "Sold"
-            } ${stockSide} for ₹${price}`,
-            icon: <Check className="h-5 w-5 text-green-500" />,
-          }
-        );
+        let successMsg: string;
+        if (stockType == "market") {
+          let totalPrice = 0;
+          response.data.data.trades.forEach(
+            (element: { quantity: number; price: number }) => {
+              totalPrice += element.price;
+            }
+          );
+          successMsg = `${
+            transactionType === "buy" ? "Bought" : "Sold"
+          } ${stockSide} for ₹${totalPrice}`;
+        } else {
+          successMsg = `${response.data.data.completed} ${
+            transactionType === "buy" ? "Bought" : "Sold"
+          }, ${response.data.data.pending} added to orderbook`
+        }
+
+        toast.success(`${stockSide.toUpperCase()} order placed successfully`, {
+          description: successMsg,
+          icon: <Check className="h-5 w-5 text-green-500" />,
+        });
       } catch (error) {
         console.log(error);
         if (error instanceof AxiosError) {
@@ -126,8 +138,6 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
       });
     }
   };
-
-
 
   return (
     <div className="w-2/3">
@@ -173,7 +183,9 @@ const TradingForm = ({ selectedQuestion, transactionType, setTransactionType }: 
               </label>
               <Select
                 value={transactionType}
-                onValueChange={(value: "buy" | "sell") => setTransactionType(value)}
+                onValueChange={(value: "buy" | "sell") =>
+                  setTransactionType(value)
+                }
               >
                 <SelectTrigger
                   className={`h-11 ${

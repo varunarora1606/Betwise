@@ -15,6 +15,7 @@ import { Wallet, X } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useAuth } from "@clerk/nextjs";
+import { API_URL_FULL } from "@/lib/config";
 
 interface AddMoneyDialogProps {
   onAddMoney: (amount: number) => void;
@@ -36,7 +37,7 @@ const AddMoneyDialog = ({ onAddMoney }: AddMoneyDialogProps) => {
     if (token) {
       try {
         await axios.post(
-          "https://api.betwise.varekle.tech/api/v1/order/on-ramp-inr",
+          `${API_URL_FULL}/order/on-ramp-inr`,
           {
             quantity: amount * 10,
           },

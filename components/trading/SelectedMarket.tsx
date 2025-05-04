@@ -9,11 +9,13 @@ import { Skeleton } from "../ui/skeleton";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
 import { OrderBook, Question } from "./Trading";
+import { API_URL_FULL } from "@/lib/config";
 
 interface SelectedMarketProps {
   question: Question;
   onBack: () => void;
   transactionType: "buy" | "sell";
+  reloadOrderbook: boolean
 }
 
 interface PriceDetail {
@@ -21,7 +23,7 @@ interface PriceDetail {
   orders: string[];
 }
 
-const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketProps) => {
+const SelectedMarket = ({ question, onBack, transactionType, reloadOrderbook }: SelectedMarketProps) => {
   const { getToken } = useAuth();
   const [orderBook, setOrderBook] = useState<OrderBook>({
     yes: [],
@@ -30,7 +32,6 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    // Simulating fetching the orderbook data
     const loadOrderbook = async () => {
       setIsLoading(true);
       const token = await getToken({ template: "my-jwt" });
@@ -44,10 +45,8 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
       }
 
       try {
-        // In a real app, this would be an API call
-        // For demo purposes, we'll simulate network delay and generate mock data
         const response = await axios.get(
-          "https://api.betwise.varekle.tech/api/v1/order/orderbook",
+          `${API_URL_FULL}/order/orderbook`,
           {
             params: {
               symbol: question.symbol,
@@ -89,58 +88,6 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
         const sortedOrders = sortOrders(newOrderBook);
         setOrderBook(sortedOrders);
 
-        // Mock orderbook data based on the selected question
-        // const mockOrders: Order[] = [
-        //   {
-        //     id: "ord-1",
-        //     type: "buy",
-        //     side: "yes",
-        //     price: -0.5,
-        //     quantity: 100,
-        //     timestamp: new Date(Date.now() - 300000).toISOString(),
-        //   },
-        //   {
-        //     id: "ord-2",
-        //     type: "sell",
-        //     side: "yes",
-        //     price: +1.2,
-        //     quantity: 50,
-        //     timestamp: new Date(Date.now() - 120000).toISOString(),
-        //   },
-        //   {
-        //     id: "ord-3",
-        //     type: "buy",
-        //     side: "no",
-        //     price: 100 - -2,
-        //     quantity: 75,
-        //     timestamp: new Date(Date.now() - 180000).toISOString(),
-        //   },
-        //   {
-        //     id: "ord-4",
-        //     type: "sell",
-        //     side: "no",
-        //     price: 100 - +0.8,
-        //     quantity: 120,
-        //     timestamp: new Date(Date.now() - 60000).toISOString(),
-        //   },
-        //   {
-        //     id: "ord-5",
-        //     type: "buy",
-        //     side: "yes",
-        //     price: -1.3,
-        //     quantity: 85,
-        //     timestamp: new Date(Date.now() - 240000).toISOString(),
-        //   },
-        //   {
-        //     id: "ord-6",
-        //     type: "sell",
-        //     side: "yes",
-        //     price: +0.7,
-        //     quantity: 65,
-        //     timestamp: new Date(Date.now() - 150000).toISOString(),
-        //   },
-        // ];
-
         // setOrderbook(sortedOrders);
       } catch (error) {
         console.error("Error loading orderbook:", error);
@@ -153,7 +100,7 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
     if (question) {
       loadOrderbook();
     }
-  }, [question, getToken]);
+  }, [question, getToken, reloadOrderbook]);
 
   useEffect(() => {
     if (transactionType == "buy") {
@@ -164,18 +111,10 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
       
     }
   }, [transactionType])
-  
-
-  // Filter orders by side
-  // const filteredOrders = orderbook.filter((order) => order.side === stockSide);
-  // const buyOrders = filteredOrders.filter((order) => order.type === "buy");
-  // const sellOrders = filteredOrders.filter((order) => order.type === "sell");
 
   // Calculate max quantities for visualization scaling
   const maxBuyQuantity = getMaxQuantity(orderBook.yes);
   const maxSellQuantity = getMaxQuantity(orderBook.yes);
-
-  // Determine the number of rows to display (max of either side, with a minimum of 5)
   const numOrdersToShow = 6;
 
   return (
@@ -211,7 +150,7 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
         {/* Probo-style Side-by-Side Orderbook */}
         <div className="mt-8 border border-purple-500/20 rounded-lg overflow-hidden bg-[#13131A]">
           <div className="p-3 bg-purple-900/20 border-b border-purple-500/20">
-            <h3 className="text-md font-medium text-purple-100">Orderbook {transactionType == "buy" ? "(Bid)" : "(Ask)"}</h3>
+            <h3 className="text-md font-medium text-purple-100">Orderbook</h3>
           </div>
 
           {isLoading ? (

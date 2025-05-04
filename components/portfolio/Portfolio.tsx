@@ -24,11 +24,12 @@ import { PortfolioItem, PendingOrder } from "@/types/portfolio";
 import { toast } from "sonner";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
+import { API_URL_FULL } from "@/lib/config";
 
 const initialPendingOrders: PendingOrder[] = [
   {
     id: "p1",
-    name: "India vs Pakistan Match",
+    title: "India vs Pakistan Match",
     type: "buy",
     quantity: 5,
     price: 75.25,
@@ -37,7 +38,7 @@ const initialPendingOrders: PendingOrder[] = [
   },
   {
     id: "p2",
-    name: "Bitcoin $100K",
+    title: "Bitcoin $100K",
     type: "sell",
     quantity: 3,
     price: 150.5,
@@ -48,6 +49,7 @@ const initialPendingOrders: PendingOrder[] = [
 
 interface PortfolioApiItem {
   symbol: string;
+  title: string;
   value: number;
   quantity: number;
 }
@@ -74,8 +76,8 @@ const Portfolio = () => {
     return pendingOrders
       .filter(
         (order) =>
-          order.name ===
-            portfolioItems.find((item) => item.id === itemId)?.name &&
+          order.title ===
+            portfolioItems.find((item) => item.id === itemId)?.title &&
           order.type === "sell"
       )
       .reduce((sum, order) => sum + order.quantity, 0);
@@ -103,15 +105,12 @@ const Portfolio = () => {
       }
 
       try {
-        const response = await axios.get(
-          "https://api.betwise.varekle.tech/api/v1/order/me",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            withCredentials: true,
-          }
-        );
+        const response = await axios.get(`${API_URL_FULL}/order/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
+        });
         console.log(response);
         const data = response.data.data;
         setWallet(data.inrBalance.quantity / 10);
@@ -120,7 +119,7 @@ const Portfolio = () => {
         data.portfolioItems.forEach((element: PortfolioApiItem) => {
           newPortfolioItems.push({
             id: element.symbol,
-            name: element.symbol,
+            title: element.title,
             value: element.value,
             quantity: element.quantity,
           });
@@ -196,7 +195,7 @@ const Portfolio = () => {
                         >
                           <div>
                             <h4 className="font-medium text-white">
-                              {item.name}
+                              {item.title}
                             </h4>
                             <div className="text-sm text-purple-300">
                               Qty: {item.quantity}
@@ -322,7 +321,7 @@ const Portfolio = () => {
                           </div>
                         )}
                       </TableCell>
-                      <TableCell className="text-white">{order.name}</TableCell>
+                      <TableCell className="text-white">{order.title}</TableCell>
                       <TableCell>{order.quantity}</TableCell>
                       <TableCell>₹{order.price.toFixed(2)}</TableCell>
                       <TableCell>

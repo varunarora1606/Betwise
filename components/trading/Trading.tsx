@@ -7,12 +7,13 @@ import TradingForm from "@/components/trading/TradingForm";
 import SelectedMarket from "@/components/trading/SelectedMarket";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { API_URL_FULL } from "@/lib/config";
 
 export interface Question {
   symbol: string;
   title: string;
   yesClosing: number;
-  volume: string;
+  volume: number;
   endTime: number;
   trend?: "hot" | "trending" | "new";
 }
@@ -20,7 +21,7 @@ export interface Question {
 interface MarketDetails {
   Question: string;
   YesClosing: number;
-  Volume: string;
+  Volume: number;
   EndTime: number;
   Trend?: "hot" | "trending" | "new";
 }
@@ -49,10 +50,11 @@ const Trading = () => {
   );
   const [questions, setQuestions] = useState<Question[]>([]);
   const [transactionType, setTransactionType] = useState<"buy" | "sell">("buy");
+  const [reloadOrderbook, setReloadOrderbook] = useState<boolean>(true);
 
   useEffect(() => {
     axios
-      .get("https://api.betwise.varekle.tech/api/v1/order/markets", {
+      .get(`${API_URL_FULL}/order/markets`, {
         withCredentials: true,
       })
       .then((res) => {
@@ -109,11 +111,13 @@ const Trading = () => {
         ) : (
           <div className="flex gap-6 w-full flex-col md:flex-row">
             <SelectedMarket
+              reloadOrderbook={reloadOrderbook}
               question={selectedQuestion}
               transactionType={transactionType}
               onBack={() => setSelectedQuestion(null)}
             />
             <TradingForm
+              setReloadOrderbook={setReloadOrderbook}
               selectedQuestion={selectedQuestion}
               transactionType={transactionType}
               setTransactionType={setTransactionType}

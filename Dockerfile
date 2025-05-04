@@ -29,6 +29,8 @@ COPY --from=builder /app/package.json ./package.json
 # Install only production dependencies
 RUN npm i --omit=dev
 
+ENV NODE_ENV=production
+ENV NEXT_PUBLIC_NODE_ENV=production
 ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
 EXPOSE 3000
