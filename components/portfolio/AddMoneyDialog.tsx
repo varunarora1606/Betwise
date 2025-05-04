@@ -36,7 +36,7 @@ const AddMoneyDialog = ({ onAddMoney }: AddMoneyDialogProps) => {
     if (token) {
       try {
         await axios.post(
-          "http://api.betwise.varekle.tech/api/v1/order/on-ramp-inr",
+          "https://api.betwise.varekle.tech/api/v1/order/on-ramp-inr",
           {
             quantity: amount * 10,
           },

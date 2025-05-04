@@ -47,7 +47,7 @@ const SelectedMarket = ({ question, onBack, transactionType }: SelectedMarketPro
         // In a real app, this would be an API call
         // For demo purposes, we'll simulate network delay and generate mock data
         const response = await axios.get(
-          "http://api.betwise.varekle.tech/api/v1/order/orderbook",
+          "https://api.betwise.varekle.tech/api/v1/order/orderbook",
           {
             params: {
               symbol: question.symbol,
