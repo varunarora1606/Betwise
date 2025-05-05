@@ -255,7 +255,7 @@ const TradingForm = ({
               }}
             >
               {/* <ArrowUp className="mr-2 h-5 w-5" /> */}
-              Yes ₹{selectedQuestion.yesClosing / 10}
+              Yes {stockType == "limit" ? `₹${Math.floor(price / 10)}.${price % 10}`: ""}
             </Button>
 
             <Button
@@ -266,7 +266,7 @@ const TradingForm = ({
               }}
             >
               {/* <ArrowDown className="mr-2 h-5 w-5" /> */}
-              No ₹{(100 - selectedQuestion.yesClosing) / 10}
+              No {stockType == "limit" ? `₹${Math.floor(price / 10)}.${price % 10}`: ""}
             </Button>
           </div>
         </div>
