@@ -118,7 +118,7 @@ const TradingForm = ({
         console.log(error);
         if (error instanceof AxiosError) {
           const errorMessage =
-            error.response?.data?.message ||
+            error.response?.data?.error ||
             "An unexpected error occurred, try again";
           toast.error("Order failed", {
             description: errorMessage,
