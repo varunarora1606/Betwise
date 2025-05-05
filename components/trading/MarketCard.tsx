@@ -44,7 +44,7 @@ const MarketCard = ({ question, onClick, className }: MarketCardProps) => (
           </Tooltip>
         </TooltipProvider>
       </div>
-      <div className="flex justify-between items-start my-3">
+      <div className="flex justify-between items-start my-3 gap-1.5">
         <h3 className="font-medium text-purple-50">{question.title}</h3>
         <span
           className={`text-xs px-3 py-1 rounded-full ${
