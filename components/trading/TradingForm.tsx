@@ -103,7 +103,7 @@ const TradingForm = ({
           );
           successMsg = `${
             transactionType === "buy" ? "Bought" : "Sold"
-          } ${stockSide} for ₹${totalPrice}`;
+          } ${stockSide} for ₹${totalPrice / 10}`;
         } else {
           successMsg = `${response.data.data.completed} ${
             transactionType === "buy" ? "Bought" : "Sold"
