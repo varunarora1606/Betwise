@@ -195,7 +195,7 @@ const Portfolio = () => {
                         >
                           <div>
                             <h4 className="font-medium text-white">
-                              {item.title}
+                              {item.title == ""? "Bitcoin $100k" : item.title}
                             </h4>
                             <div className="text-sm text-purple-300">
                               Qty: {item.quantity}
