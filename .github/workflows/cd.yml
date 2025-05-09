@@ -45,8 +45,16 @@ jobs:
           # SSH into EC2 and manage Docker container
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
             sudo docker pull varunarora1606/betwise:${{ github.sha }}
+
             sudo docker stop betwise || true
             sudo docker rm betwise || true
+
+            # OPTIONAL: Remove old images except the currently used one
+            sudo docker image prune -af --filter "until=2h"
+
+            # OPTIONAL: Clean up unused volumes
+            sudo docker volume prune -f
+
             sudo docker run --name betwise \
              --restart always \
              -e NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }} \
