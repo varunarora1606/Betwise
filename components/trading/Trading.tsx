@@ -8,6 +8,7 @@ import SelectedMarket from "@/components/trading/SelectedMarket";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { API_URL_FULL } from "@/lib/config";
+import { toast } from "sonner";
 
 export interface Question {
   symbol: string;
@@ -53,16 +54,18 @@ const Trading = () => {
   const [reloadOrderbook, setReloadOrderbook] = useState<boolean>(true);
 
   useEffect(() => {
-    axios
-      .get(`${API_URL_FULL}/order/markets`, {
-        withCredentials: true,
-      })
-      .then((res) => {
+    const loadQuestions = async () => {
+      try {
+        const res = await axios.get(`${API_URL_FULL}/order/markets`, {
+          withCredentials: true,
+        });
+
         console.log(res.data.data);
-        const data: Map<string, MarketDetails> = res.data.data.markets;
-        console.log(data);
+
+        const data = res.data.data.markets as Record<string, MarketDetails>;
+
         const newQuestions: Question[] = Object.entries(data).map(
-          ([symbol, marketDetails]: [string, MarketDetails]) => ({
+          ([symbol, marketDetails]) => ({
             symbol,
             title: marketDetails.Question,
             yesClosing: marketDetails.YesClosing,
@@ -72,8 +75,19 @@ const Trading = () => {
         );
 
         console.log(newQuestions);
+
         setQuestions(newQuestions);
-      });
+      } catch (err) {
+        console.error("Error loading markets", err);
+        throw err;
+      }
+    };
+
+    toast.promise(loadQuestions(), {
+      loading: "It may take a few seconds to load...",
+      success: "Market loaded successfully",
+      error: "Error loading market data",
+    });
 
     return () => {};
   }, []);
